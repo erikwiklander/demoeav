@@ -13,37 +13,36 @@ import java.time.LocalDate;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of = "entAttr", callSuper = false)
+@EqualsAndHashCode(of = {"ent", "attr"}, callSuper = false)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"ent_id", "attr_id"})})
 public class Eav extends BaseEntity {
 
-    @Embedded
-    EntAttr entAttr;
+    @ManyToOne
+    private Ent ent;
 
-    @Enumerated(EnumType.STRING)
-    private AttrType type;
+    @ManyToOne
+    private Attr attr;
 
     private String stringValue;
+    @Column(precision = 25, scale = 5)
     private BigDecimal numberValue;
     private LocalDate dateValue;
+    private Boolean booleanValue;
 
-
-    private Eav(Object value, EntAttr entAttr) {
-        this.type = getAttrType(value);
-        this.entAttr = entAttr;
+    private Eav(Object value, Ent ent, Attr attr) {
+        attr.setType(getAttrType(value));
+        this.attr = attr;
+        this.ent = ent;
         setValue(value);
     }
 
-    public static Eav create(Object value, EntAttr entAttr) {
-        return new Eav(value, entAttr);
+    public static Eav create(Object value, Ent ent, Attr attr) {
+        return new Eav(value, ent, attr);
     }
 
     public void setValue(Object value) {
-        if (type == null) {
-            throw new IllegalStateException("Attribute type not set!");
-        }
         AttrType attrType = getAttrType(value);
-        Assert.isTrue(attrType == this.type, "Attribute Type mismatch!");
+        Assert.isTrue(attrType == this.attr.getType(), "Attribute Type mismatch!");
         attrType.getValueSetter().accept(this, value);
     }
 

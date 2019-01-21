@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -18,21 +19,33 @@ public enum AttrType {
             String.class,
             (eav, o) -> {
                 eav.setStringValue((String) o);
-            }),
+            },
+            Eav::getStringValue
+    ),
     NUMBER(BigDecimal.class,
             (eav, o) -> {
                 eav.setNumberValue((BigDecimal) o);
-            }
+            },
+            Eav::getNumberValue
     ),
     DATE(
             LocalDate.class,
             (eav, o) -> {
                 eav.setDateValue((LocalDate) o);
-            }
+            },
+            Eav::getDateValue
+    ),
+    BOOLEAN(
+            Boolean.class,
+            (eav, o) -> {
+                eav.setBooleanValue((Boolean) o);
+            },
+            Eav::getBooleanValue
     );
 
     private Class clazz;
     private BiConsumer<Eav, Object> valueSetter;
+    private Function<Eav, Object> valueGetter;
     private static Map<Class, AttrType> TYPE_BY_CLASS =
             Arrays.stream(values()).collect(
                     Collectors.toMap(attrType -> attrType.clazz, attrType -> attrType));

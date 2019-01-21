@@ -1,32 +1,44 @@
 package io.wiklandia.demoeav.demo.controller;
 
+import io.wiklandia.demoeav.demo.service.EntService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
+@AllArgsConstructor
 @RestController
 public class EntController {
 
-    @GetMapping("yes/ents")
+    private final EntService entService;
+
+    @GetMapping("objects")
     public List<EntDto> getEnts() {
-        return Collections.emptyList();
+        return entService.assembleAll();
     }
 
-    @PostMapping("yes/no")
-    public void posting(@RequestBody Map<String, Object> body) {
+    @PostMapping("objects")
+    public EntDto posting(@RequestBody Map<String, Object> body) {
+        return entService.assemble(entService.createEnt(body));
+    }
 
-        for (Object vals : body.values()) {
-            log.info("{}", vals.getClass().getSimpleName());
-        }
+    @PatchMapping("objects/{id}")
+    public EntDto patching(@PathVariable UUID id, @RequestBody Map<String, Object> body) {
+        return entService.assemble(entService.patchEnt(id, body));
+    }
 
-        log.info("{}", body);
+    @GetMapping("objects/{id}")
+    public EntDto getting(@PathVariable UUID id) {
+        return entService.assemble(id);
+    }
+
+    @PutMapping("objects/{id}")
+    public EntDto putting(@PathVariable UUID id, @RequestBody Map<String, Object> body) {
+        return entService.assemble(entService.putEnt(id, body));
     }
 
 
