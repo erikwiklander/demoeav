@@ -55,9 +55,4 @@ public enum AttrType {
         return TYPE_BY_CLASS.get(clazz);
     }
 
-    public static boolean isValidType(Class clazz) {
-        return getType(clazz) != null;
-    }
-
-
 }

@@ -14,7 +14,21 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"ent", "attr"}, callSuper = false)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"ent_id", "attr_id"})})
+@Table(
+        uniqueConstraints =
+                {
+                        @UniqueConstraint(columnNames = {"ent_id", "attr_id"})
+                },
+        indexes =
+                {
+                        @Index(columnList = "ent_id"),
+                        @Index(columnList = "attr_id"),
+                        @Index(columnList = "stringValue"),
+                        @Index(columnList = "numberValue"),
+                        @Index(columnList = "dateValue"),
+                        @Index(columnList = "booleanValue")
+                }
+)
 public class Eav extends BaseEntity {
 
     @ManyToOne

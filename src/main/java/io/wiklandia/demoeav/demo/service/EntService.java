@@ -82,13 +82,17 @@ public class EntService {
 
     public EntDto assemble(Ent ent) {
         EntDto entDto = new EntDto(ent.getId());
-        List<Eav> eavs = eavRepository.findByEnt(ent);
-        eavs.forEach(eav -> entDto.add(eav.getAttr().getName(), eav.getAttr().getType().getValueGetter().apply(eav)));
+        eavRepository.findByEnt(ent)
+                .forEach(eav -> entDto.add(
+                        eav.getAttr().getName(),
+                        eav.getAttr().getType().getValueGetter().apply(eav)));
         return entDto;
     }
 
     public EntDto assemble(UUID id) {
-        return entRepository.findById(id).map(this::assemble).orElseThrow(() -> new IllegalArgumentException("No such id: " + id));
+        return entRepository.findById(id)
+                .map(this::assemble)
+                .orElseThrow(() -> new IllegalArgumentException("No such id: " + id));
     }
 
     private List<EntDto> assemble(Iterable<Ent> ents) {

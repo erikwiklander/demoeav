@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -28,12 +29,14 @@ public class BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (o == null) {
+            return false;
+        } else if (this == o) {
             return true;
-        } else if (!(o instanceof BaseEntity)) {
+        } else if (this.getClass() != o.getClass()) {
             return false;
         } else {
-            return id != null && id.equals(((BaseEntity) o).id);
+            return Objects.equals(id, ((BaseEntity) o).id);
         }
     }
 

@@ -7,6 +7,4 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface AttrRepository extends BaseRepository<Attr> {
     Optional<Attr> findByName(String name);
-
-    boolean existsByName(String name);
 }
