@@ -19,5 +19,9 @@ public class EntDto {
         attrs.put(attrName, value);
     }
 
+    void addAll(Map<String, Object> vals) {
+        attrs.putAll(vals);
+    }
+
 
 }
