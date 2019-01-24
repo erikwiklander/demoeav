@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
@@ -59,7 +58,7 @@ public class EntControllerTest {
     }
 
     private EntDto createEntDto(Map<String, Object> attrs) {
-        EntDto entDto = new EntDto(UUID.randomUUID());
+        EntDto entDto = new EntDto(1L);
         entDto.addAll(attrs);
         return entDto;
     }

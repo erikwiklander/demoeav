@@ -17,26 +17,29 @@ import java.time.LocalDate;
 @Table(
         uniqueConstraints =
                 {
-                        @UniqueConstraint(columnNames = {"ent_id", "attr_id"})
+                        @UniqueConstraint(columnNames = {"ent_id", "attr_id"}, name = "eav_ent_id_attr_id_key")
                 },
         indexes =
                 {
-                        @Index(columnList = "ent_id"),
-                        @Index(columnList = "attr_id"),
-                        @Index(columnList = "stringValue"),
-                        @Index(columnList = "numberValue"),
-                        @Index(columnList = "dateValue"),
-                        @Index(columnList = "booleanValue")
+                        @Index(columnList = "ent_id", name = "eav_ent_id_index"),
+                        @Index(columnList = "attr_id", name = "eav_attr_id_index"),
+                        @Index(columnList = "stringValue", name = "eav_string_value_index"),
+                        @Index(columnList = "numberValue", name = "eav_number_value_index"),
+                        @Index(columnList = "dateValue", name = "eav_date_value_index"),
+                        @Index(columnList = "booleanValue", name = "eav_boolean_value_index")
                 }
 )
 public class Eav extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "eav_ent_id_fkey"))
     private Ent ent;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "eav_attr_id_fkey"))
     private Attr attr;
 
+    @Column(columnDefinition = "text")
     private String stringValue;
     @Column(precision = 25, scale = 5)
     private BigDecimal numberValue;

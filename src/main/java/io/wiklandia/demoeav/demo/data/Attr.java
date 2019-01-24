@@ -4,19 +4,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 
 @Data
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = "name", name = "attr_name_key")
+)
 public class Attr extends BaseEntity {
 
-    @Column(unique = true)
     private String name;
 
     @Enumerated(EnumType.STRING)

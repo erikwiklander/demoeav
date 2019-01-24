@@ -5,13 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Data
 @RequiredArgsConstructor
 public class EntDto {
 
-    private final UUID id;
+    private final Long id;
 
     private Map<String, Object> attrs = new HashMap<>();
 
