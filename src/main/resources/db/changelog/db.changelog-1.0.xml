@@ -1,0 +1,81 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="erikwiklander (generated)" id="1548451402160-1">
+        <createTable tableName="attr">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="attr_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-2">
+        <createTable tableName="eav">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="eav_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="boolean_value" type="BOOLEAN"/>
+            <column name="date_value" type="date"/>
+            <column name="number_value" type="numeric(25, 5)"/>
+            <column name="string_value" type="TEXT"/>
+            <column name="attr_id" type="BIGINT"/>
+            <column name="ent_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-3">
+        <createTable tableName="ent">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="ent_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-4">
+        <addUniqueConstraint columnNames="name" constraintName="attr_name_key" tableName="attr"/>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-5">
+        <addUniqueConstraint columnNames="ent_id, attr_id" constraintName="eav_ent_id_attr_id_key" tableName="eav"/>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-6">
+        <createIndex indexName="eav_attr_id_index" tableName="eav">
+            <column name="attr_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-7">
+        <createIndex indexName="eav_boolean_value_index" tableName="eav">
+            <column name="boolean_value"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-8">
+        <createIndex indexName="eav_date_value_index" tableName="eav">
+            <column name="date_value"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-9">
+        <createIndex indexName="eav_ent_id_index" tableName="eav">
+            <column name="ent_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-10">
+        <createIndex indexName="eav_number_value_index" tableName="eav">
+            <column name="number_value"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-11">
+        <createIndex indexName="eav_string_value_index" tableName="eav">
+            <column name="string_value"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-12">
+        <addForeignKeyConstraint baseColumnNames="attr_id" baseTableName="eav" constraintName="eav_attr_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="attr" validate="true"/>
+    </changeSet>
+    <changeSet author="erikwiklander (generated)" id="1548451402160-13">
+        <addForeignKeyConstraint baseColumnNames="ent_id" baseTableName="eav" constraintName="eav_ent_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="ent" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

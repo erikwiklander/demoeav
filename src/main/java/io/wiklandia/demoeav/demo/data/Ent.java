@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 public class Ent extends BaseEntity {
 
+    private String type;
+
     public static Ent create() {
         return new Ent();
     }
