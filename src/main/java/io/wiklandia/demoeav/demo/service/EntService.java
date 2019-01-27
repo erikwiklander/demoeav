@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface EntService {
-    Ent createEnt(Map<String, Object> attrs);
+    Ent createEnt(String type);
+
+    Ent createEnt(String type, Map<String, Object> attrs);
 
     Ent patchEnt(UUID entId, Map<String, Object> attrs);
 

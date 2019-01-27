@@ -41,7 +41,15 @@ public enum AttrType {
                 eav.setBooleanValue((Boolean) o);
             },
             Eav::getBooleanValue
+    ),
+    REL(
+            Ent.class,
+            (eav, o) -> {
+                eav.setRelValue((Ent) o);
+            },
+            Eav::getRelValue
     );
+
 
     private Class clazz;
     private BiConsumer<Eav, Object> valueSetter;

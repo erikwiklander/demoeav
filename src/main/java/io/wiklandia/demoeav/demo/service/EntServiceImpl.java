@@ -25,8 +25,14 @@ public class EntServiceImpl implements EntService {
 
     @Override
     @Transactional
-    public Ent createEnt(Map<String, Object> attrs) {
-        Ent ent = entRepository.save(Ent.create());
+    public Ent createEnt(String type) {
+        return entRepository.save(Ent.create(type));
+    }
+
+    @Override
+    @Transactional
+    public Ent createEnt(String type, Map<String, Object> attrs) {
+        Ent ent = createEnt(type);
         return saveAttributes(ent, attrs);
     }
 
@@ -86,7 +92,7 @@ public class EntServiceImpl implements EntService {
 
     @Override
     public EntDto assemble(Ent ent) {
-        EntDto entDto = new EntDto(ent.getId());
+        EntDto entDto = new EntDto(ent.getId(), ent.getType());
         eavRepository.findByEnt(ent)
                 .forEach(eav -> entDto.add(
                         eav.getAttr().getName(),

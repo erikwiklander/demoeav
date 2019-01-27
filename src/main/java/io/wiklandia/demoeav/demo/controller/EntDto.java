@@ -12,6 +12,8 @@ public class EntDto {
 
     private final Long id;
 
+    private final String type;
+
     private Map<String, Object> attrs = new HashMap<>();
 
     public void add(String attrName, Object value) {

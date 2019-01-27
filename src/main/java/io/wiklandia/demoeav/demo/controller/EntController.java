@@ -22,8 +22,8 @@ public class EntController {
     }
 
     @PostMapping("objects")
-    public EntDto posting(@RequestBody Map<String, Object> body) {
-        return entService.assemble(entService.createEnt(body));
+    public EntDto posting(@RequestParam String type, @RequestBody Map<String, Object> body) {
+        return entService.assemble(entService.createEnt(type, body));
     }
 
     @PatchMapping("objects/{id}")

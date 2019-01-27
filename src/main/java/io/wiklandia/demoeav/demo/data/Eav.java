@@ -31,11 +31,11 @@ import java.time.LocalDate;
 )
 public class Eav extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "eav_ent_id_fkey"))
     private Ent ent;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "eav_attr_id_fkey"))
     private Attr attr;
 
@@ -45,6 +45,9 @@ public class Eav extends BaseEntity {
     private BigDecimal numberValue;
     private LocalDate dateValue;
     private Boolean booleanValue;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "eav_rel_value_id_fkey"))
+    private Ent relValue;
 
     private Eav(Object value, Ent ent, Attr attr) {
         attr.setType(getAttrType(value));
