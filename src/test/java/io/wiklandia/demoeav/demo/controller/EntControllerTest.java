@@ -47,8 +47,9 @@ public class EntControllerTest {
                 get("/objects"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].*", hasSize(2)))
+                .andExpect(jsonPath("$[0].*", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(e1.getId().toString()))
+                .andExpect(jsonPath("$[0].type").value(e1.getType()))
                 .andExpect(jsonPath("$[0].attrs.*", hasSize(3)))
                 .andExpect(jsonPath("$[0].attrs.a1").value("text"))
                 .andExpect(jsonPath("$[0].attrs.a2").value(true))
@@ -58,7 +59,7 @@ public class EntControllerTest {
     }
 
     private EntDto createEntDto(Map<String, Object> attrs) {
-        EntDto entDto = new EntDto(1L);
+        EntDto entDto = new EntDto(1L, "test");
         entDto.addAll(attrs);
         return entDto;
     }
