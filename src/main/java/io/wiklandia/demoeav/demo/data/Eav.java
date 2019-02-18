@@ -50,7 +50,6 @@ public class Eav extends BaseEntity {
     private Ent relValue;
 
     private Eav(Object value, Ent ent, Attr attr) {
-        attr.setType(getAttrType(value));
         this.attr = attr;
         this.ent = ent;
         setValue(value);
@@ -62,7 +61,8 @@ public class Eav extends BaseEntity {
 
     public void setValue(Object value) {
         AttrType attrType = getAttrType(value);
-        Assert.isTrue(attrType == this.attr.getType(), "Attribute Type mismatch!");
+        Assert.isTrue(attrType == this.attr.getType(),
+                String.format("Attribute Type mismatch! (%s %s)", attrType, this.attr.getType()));
         attrType.getValueSetter().accept(this, value);
     }
 

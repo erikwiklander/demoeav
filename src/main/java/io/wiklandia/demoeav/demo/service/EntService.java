@@ -10,6 +10,8 @@ import java.util.UUID;
 public interface EntService {
     Ent createEnt(String type);
 
+    Ent createEnt(String type, String attr, Object value);
+
     Ent createEnt(String type, Map<String, Object> attrs);
 
     Ent patchEnt(UUID entId, Map<String, Object> attrs);
@@ -21,6 +23,8 @@ public interface EntService {
     EntDto assemble(Ent ent);
 
     EntDto assemble(UUID id);
+
+    List<EntDto> assembleByType(String type);
 
     List<EntDto> assembleAll();
 }

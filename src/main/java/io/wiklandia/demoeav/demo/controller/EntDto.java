@@ -1,14 +1,19 @@
 package io.wiklandia.demoeav.demo.controller;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @RequiredArgsConstructor
-public class EntDto {
+public class EntDto implements Serializable {
 
     private final Long id;
 

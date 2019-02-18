@@ -17,8 +17,13 @@ public class EntController {
     private final EntService entService;
 
     @GetMapping("objects")
-    public List<EntDto> getEnts() {
+    public List<EntDto> getAll() {
         return entService.assembleAll();
+    }
+
+    @GetMapping("type/{type}")
+    public List<EntDto> getByType(@PathVariable String type) {
+        return entService.assembleByType(type);
     }
 
     @PostMapping("objects")
@@ -40,6 +45,5 @@ public class EntController {
     public EntDto putting(@PathVariable UUID id, @RequestBody Map<String, Object> body) {
         return entService.assemble(entService.putEnt(id, body));
     }
-
 
 }

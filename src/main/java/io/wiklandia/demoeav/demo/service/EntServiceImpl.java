@@ -1,11 +1,13 @@
 package io.wiklandia.demoeav.demo.service;
 
+import com.google.common.collect.ImmutableMap;
 import io.wiklandia.demoeav.demo.controller.EntDto;
 import io.wiklandia.demoeav.demo.data.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,12 @@ public class EntServiceImpl implements EntService {
     @Transactional
     public Ent createEnt(String type) {
         return entRepository.save(Ent.create(type));
+    }
+
+    @Override
+    @Transactional
+    public Ent createEnt(String type, String attr, Object value) {
+        return createEnt(type, ImmutableMap.of(attr, value));
     }
 
     @Override
@@ -63,8 +71,8 @@ public class EntServiceImpl implements EntService {
         return ent;
     }
 
-    private Attr findOrCreate(String attrName) {
-        Attr attr = attrRepository.findByName(attrName).orElseGet(() -> Attr.create(attrName));
+    private Attr findOrCreate(String attrName, Object value) {
+        Attr attr = attrRepository.findByName(attrName).orElseGet(() -> Attr.of(attrName, AttrType.getType(value.getClass())));
         if (attr.getId() == null) {
             log.info("Creating new attribute: {}", attrName);
         }
@@ -78,7 +86,12 @@ public class EntServiceImpl implements EntService {
         if (value == null) {
             deleteValue(ent, attrName);
         } else {
-            Attr attr = findOrCreate(attrName);
+            Attr attr = findOrCreate(attrName, value);
+            Assert.isTrue(attr.getType() == AttrType.getType(value.getClass()),
+                    "Wrong attribute type: " + attr);
+            if (attr.getType() != AttrType.getType(value.getClass())) {
+                throw new IllegalStateException(String.format("Wrong attribute type! %s", attr));
+            }
             Eav eav = eavRepository.findByEntAndAttr(ent, attr).orElseGet(() -> Eav.create(value, ent, attr));
             eav.setValue(value);
             eavRepository.save(eav);
@@ -116,5 +129,10 @@ public class EntServiceImpl implements EntService {
     @Override
     public List<EntDto> assembleAll() {
         return assemble(entRepository.findAll());
+    }
+
+    @Override
+    public List<EntDto> assembleByType(String type) {
+        return assemble(entRepository.findByType(type));
     }
 }

@@ -7,17 +7,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = "type", name = "ent_type_key")
-)
 public class Ent extends BaseEntity {
 
     @Column(nullable = false)

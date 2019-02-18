@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SetupConfig {
 
+
+    /**
+     * Creates meta data for the table
+     */
     @Bean
     public CommandLineRunner setup(EntService entService) {
         return args -> {
@@ -23,6 +27,11 @@ public class SetupConfig {
             entService.saveValue(col1, "attribute_type", "string");
             entService.saveValue(col1, "table", tableConfig);
 
+            entService.createEnt("admin_attribute", "type", "string");
+            entService.createEnt("admin_attribute", "type", "integer");
+            entService.createEnt("admin_attribute", "type", "decimal");
+            entService.createEnt("admin_attribute", "type", "date");
+            entService.createEnt("admin_attribute", "type", "boolean");
         };
     }
 
